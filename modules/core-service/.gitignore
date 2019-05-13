@@ -1,0 +1,24 @@
+*.class
+*.log
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+event_store
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# IntelliJ
+.idea
+
+# test journal locations
+src/test/resources/journal

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite hostname="Tardis" name="com.omd.fp.KleislisTest" tests="14" errors="0" failures="0" skipped="0" time="0.242" timestamp="2019-05-13T23:53:33">
+                     <properties>
+      <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/><property name="java.specification.version" value="11"/><property name="sun.cpu.isalist" value=""/><property name="sun.jnu.encoding" value="UTF-8"/><property name="sun.arch.data.model" value="64"/><property name="java.vendor.url" value="http://java.oracle.com/"/><property name="sun.boot.library.path" value="/home/omadas/dev/env/jdk-11/lib"/><property name="sun.java.command" value="/home/omadas/dev/env/sbt/bin/sbt-launch.jar"/><property name="jdk.debug" value="release"/><property name="java.specification.vendor" value="Oracle Corporation"/><property name="java.version.date" value="2018-09-25"/><property name="java.home" value="/home/omadas/dev/env/jdk-11"/><property name="file.separator" value="/"/><property name="java.vm.compressedOopsMode" value="32-bit"/><property name="line.separator" value="
+"/><property name="java.specification.name" value="Java Platform API Specification"/><property name="java.vm.specification.vendor" value="Oracle Corporation"/><property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/><property name="java.runtime.version" value="11+28"/><property name="user.name" value="omadas"/><property name="file.encoding" value="UTF-8"/><property name="jnidispatch.path" value="/tmp/jna--1013478797/jna8429422637006414624.tmp"/><property name="java.vendor.version" value="18.9"/><property name="jna.loaded" value="true"/><property name="java.io.tmpdir" value="/tmp"/><property name="java.version" value="11"/><property name="java.vm.specification.name" value="Java Virtual Machine Specification"/><property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/><property name="sun.os.patch.level" value="unknown"/><property name="java.library.path" value="/usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib"/><property name="java.vendor" value="Oracle Corporation"/><property name="scala.ext.dirs" value="/home/omadas/.sbt/0.13/java9-rt-ext-oracle_corporation_11"/><property name="sun.io.unicode.encoding" value="UnicodeLittle"/><property name="sun.desktop" value="gnome"/><property name="java.class.path" value="/home/omadas/dev/env/sbt/bin/sbt-launch.jar"/><property name="java.vm.vendor" value="Oracle Corporation"/><property name="jline.shutdownhook" value="false"/><property name="user.timezone" value="Europe/Dublin"/><property name="os.name" value="Linux"/><property name="java.vm.specification.version" value="11"/><property name="sun.java.launcher" value="SUN_STANDARD"/><property name="user.country" value="GB"/><property name="sun.cpu.endian" value="little"/><property name="user.home" value="/home/omadas"/><property name="user.language" value="en"/><property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/><property name="jline.esc.timeout" value="0"/><property name="path.separator" value=":"/><property name="os.version" value="4.15.0-48-generic"/><property name="jna.nosys" value="true"/><property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/><property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/><property name="jna.platform.library.path" value="/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/lib64:/usr/lib:/lib:/usr/lib/x86_64-linux-gnu/libfakeroot"/><property name="java.vendor.url.bug" value="http://bugreport.java.com/bugreport/"/><property name="user.dir" value="/home/omadas/dev/projects/scala/http4s-fun"/><property name="os.arch" value="amd64"/><property name="java.vm.info" value="mixed mode"/><property name="java.vm.version" value="11+28"/><property name="java.class.version" value="55.0"/>
+    </properties>
+                     <testcase classname="com.omd.fp.KleislisTest" name="||| should give first result" time="0.191">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="||| should recover" time="0.031">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="||| should not recover" time="0.001">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;=&gt; should compose" time="0.002">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;=&gt; should not compose" time="0.002">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;==&gt; should compose" time="0.003">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;==&gt; should not compose" time="0.002">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="=&lt;&lt; should compose" time="0.001">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="=&lt;&lt; should not compose" time="0.001">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;&gt;:: should compose" time="0.001">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;&gt;:: should not compose" time="0.001">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="=&lt;&lt;&lt; should compose" time="0.002">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="&gt;&gt;&gt;:: should compose" time="0.001">
+                                                 
+                                               </testcase><testcase classname="com.omd.fp.KleislisTest" name="pointF should compose lift" time="0.003">
+                                                 
+                                               </testcase>
+                     <system-out><![CDATA[]]></system-out>
+                     <system-err><![CDATA[]]></system-err>
+                   </testsuite>

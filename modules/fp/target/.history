@@ -1,0 +1,31 @@
+clean
+compile
+test:compile
+test
+compile
+clean
+compile
+project config-layer
+projects
+project config
+test
+clean
+compile
+test
+clean
+compile
+test
+testOnly com.graboids.fp.ValidationsTest
+clean
+compile
+test
+clean
+test
+project coreService
+clean
+compile
+test
+project coreService
+clean
+test
+project core

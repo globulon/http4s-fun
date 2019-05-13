@@ -1,0 +1,49 @@
+[0m[[0m[0mdebug[0m] [0m[0mjavaOptions: Vector()[0m
+[0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
+[0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalacheck.ScalaCheckFramework produced 0 initial tasks for 0 tests.[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 4 initial tasks for 4 tests.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(com.omd.service.users.http.DTOsTest, sbt.ForkMain$SubclassFingerscan@1a84f218, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mDTOsTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mEncoding[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should encode json[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(com.omd.service.users.EntitiesTest, sbt.ForkMain$SubclassFingerscan@2501ef73, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mEntitiesTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mindex route[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should deliver welcome message[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32muser route[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return no not found[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return a user[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mPost user[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return created[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return conflict[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return conflict message[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return all messages[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32musers route[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return empty list[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return non empty list[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 9 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(com.omd.service.users.http.MiscTest, sbt.ForkMain$SubclassFingerscan@7b5311c4, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mMiscTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mbanner[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should be defined[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(com.omd.service.users.http.TranslationsTest, sbt.ForkMain$SubclassFingerscan@1a25278d, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTranslationsTest:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mtranlate cors[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should translate to http4s cors[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 1 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0mSummary for ScalaCheck not available.[0m
+[0m[[0m[0minfo[0m] [0m[0mScalaTest[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 984 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 12[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 12, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0mPassed: Total 12, Failed 0, Errors 0, Passed 12[0m
+[0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com.omd.service.users.http.MiscTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com.omd.service.users.http.TranslationsTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com.omd.service.users.http.DTOsTest[0m
+[0m[[0m[0mdebug[0m] [0m[0m	com.omd.service.users.EntitiesTest[0m

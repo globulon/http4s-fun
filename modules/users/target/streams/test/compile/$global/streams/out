@@ -1,0 +1,8 @@
+[0m[[0m[31merror[0m] [0m[0m/home/omadas/dev/projects/scala/http4s-fun/modules/users/src/test/scala/com/omd/service/users/http/TranslationsTest.scala:12:41: value to is not a member of com.omd.service.domain.Cors[0m
+[0m[[0m[31merror[0m] [0m[0m      Cors(origin = "http://alpha.com").to[CORSConfig] must be(expectd)[0m
+[0m[[0m[31merror[0m] [0m[0m                                        ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/omadas/dev/projects/scala/http4s-fun/modules/users/src/test/scala/com/omd/service/users/http/TranslationsTest.scala:16:15: private method expectd in class TranslationsTest is never used[0m
+[0m[[0m[33mwarn[0m] [0m[0m  private def expectd = CORSConfig([0m
+[0m[[0m[33mwarn[0m] [0m[0m              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

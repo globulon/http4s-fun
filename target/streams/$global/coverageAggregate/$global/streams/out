@@ -1,0 +1,10 @@
+[0m[[0m[0minfo[0m] [0m[0mAggregating coverage from subprojects...[0m
+[0m[[0m[0minfo[0m] [0m[0mGenerating scoverage reports...[0m
+[0m[[0m[0minfo[0m] [0m[0mWritten Cobertura report [/home/omadas/dev/projects/scala/alpha-project/services/target/scala-2.12/coverage-report/cobertura.xml][0m
+[0m[[0m[0minfo[0m] [0m[0mWritten XML coverage report [/home/omadas/dev/projects/scala/alpha-project/services/target/scala-2.12/scoverage-report/scoverage.xml][0m
+[0m[[0m[0minfo[0m] [0m[0mWritten HTML coverage report [/home/omadas/dev/projects/scala/alpha-project/services/target/scala-2.12/scoverage-report/index.html][0m
+[0m[[0m[0minfo[0m] [0m[0mStatement coverage.: 78.78%[0m
+[0m[[0m[0minfo[0m] [0m[0mBranch coverage....: 100.00%[0m
+[0m[[0m[0minfo[0m] [0m[0mCoverage reports completed[0m
+[0m[[0m[0minfo[0m] [0m[0mAggregation complete. Coverage was [78.78][0m
+[0m[[0m[0minfo[0m] [0m[0mAll done. Coverage was [78.78%][0m

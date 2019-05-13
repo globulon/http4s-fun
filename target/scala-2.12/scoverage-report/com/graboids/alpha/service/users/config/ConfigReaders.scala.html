@@ -1,0 +1,308 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          com/graboids/alpha/service/users/config/ConfigReaders.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package com.graboids.alpha.service.users.config
+</span>2 <span style=''>
+</span>3 <span style=''>import com.graboids.alpha.service.config.{Server, ServerReaders}
+</span>4 <span style=''>import scalaz.Reader
+</span>5 <span style=''>
+</span>6 <span style=''>private[config] trait ConfigReaders extends ServerReaders {
+</span>7 <span style=''>  type ReadConfig[A] = Reader[UsersConfig, A]
+</span>8 <span style=''>
+</span>9 <span style=''>  private def readConfig[A](f: UsersConfig ⇒ A): ReadConfig[A] = </span><span style='background: #AEF1AE'>Reader { f }</span><span style=''>
+</span>10 <span style=''>
+</span>11 <span style=''>  final def serverConfig: ReadConfig[Server] = </span><span style='background: #AEF1AE'>readConfig(_.server)</span><span style=''>
+</span>12 <span style=''>  final def corsOrigin: ReadConfig[String] = </span><span style='background: #AEF1AE'>serverConfig &gt;=&gt; readCorsOrigin</span><span style=''>
+</span>13 <span style=''>  final def port: ReadConfig[Int] = </span><span style='background: #F0ADAD'>serverConfig &gt;=&gt; readServerPort</span><span style=''>
+</span>14 <span style=''>  final def host: ReadConfig[String] = </span><span style='background: #F0ADAD'>serverConfig &gt;=&gt; readServerHost</span><span style=''>
+</span>15 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          9
+        </td>
+        <td>
+          315
+        </td>
+        <td>
+          308
+          -
+          320
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          11
+        </td>
+        <td>
+          203
+        </td>
+        <td>
+          369
+          -
+          389
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          11
+        </td>
+        <td>
+          278
+        </td>
+        <td>
+          380
+          -
+          388
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          202
+        </td>
+        <td>
+          448
+          -
+          448
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          311
+        </td>
+        <td>
+          452
+          -
+          466
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          239
+        </td>
+        <td>
+          435
+          -
+          466
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          13
+        </td>
+        <td>
+          370
+        </td>
+        <td>
+          503
+          -
+          534
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #F0ADAD">
+          
+        </td>
+      </tr><tr>
+        <td>
+          13
+        </td>
+        <td>
+          247
+        </td>
+        <td>
+          520
+          -
+          534
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #F0ADAD">
+          
+        </td>
+      </tr><tr>
+        <td>
+          13
+        </td>
+        <td>
+          318
+        </td>
+        <td>
+          516
+          -
+          516
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #F0ADAD">
+          
+        </td>
+      </tr><tr>
+        <td>
+          14
+        </td>
+        <td>
+          336
+        </td>
+        <td>
+          587
+          -
+          587
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #F0ADAD">
+          
+        </td>
+      </tr><tr>
+        <td>
+          14
+        </td>
+        <td>
+          252
+        </td>
+        <td>
+          591
+          -
+          605
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #F0ADAD">
+          
+        </td>
+      </tr><tr>
+        <td>
+          14
+        </td>
+        <td>
+          188
+        </td>
+        <td>
+          574
+          -
+          605
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #F0ADAD">
+          
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

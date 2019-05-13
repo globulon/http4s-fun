@@ -1,0 +1,326 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          com/graboids/fp/Disjunctions.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package com.graboids.fp
+</span>2 <span style=''>
+</span>3 <span style=''>import scalaz.{-\/, Monad, Semigroup, \/, \/-}
+</span>4 <span style=''>
+</span>5 <span style=''>/**
+</span>6 <span style=''>  * A union can be associated to [[Monad]] Typeclass that also inherits from an [[scalaz.Applicative]] Typeclass
+</span>7 <span style=''>  * only available when the left injection is a [[Semigroup]].
+</span>8 <span style=''>  *
+</span>9 <span style=''>  * The setting allows to stack left  behaviour in a [[Semigroup]] when the [[scalaz.Applicative]] behaviour is being
+</span>10 <span style=''>  * applied
+</span>11 <span style=''>  */
+</span>12 <span style=''>private[fp] trait Disjunctions {
+</span>13 <span style=''>  type ∪[A, B] = \/[A, B]
+</span>14 <span style=''>
+</span>15 <span style=''>  final def injectR[A, B](b: B): A ∪ B = </span><span style='background: #AEF1AE'>\/-(b)</span><span style=''>
+</span>16 <span style=''>  final def injectL[A, B](a: A): A ∪ B = </span><span style='background: #AEF1AE'>-\/(a)</span><span style=''>
+</span>17 <span style=''>
+</span>18 <span style=''>  implicit def safeMonad[E : Semigroup]: Monad[E ∪ ?] = </span><span style='background: #AEF1AE'>new</span><span style=''> Monad[E ∪ ?] {
+</span>19 <span style=''>    override def point[A](a: ⇒ A): E ∪ A = </span><span style='background: #AEF1AE'>injectR(a)</span><span style=''>
+</span>20 <span style=''>
+</span>21 <span style=''>    override def ap[A, B](fa: ⇒ E ∪ A)(f: ⇒ E ∪ (A ⇒ B)): E ∪ B = (fa, f) match {
+</span>22 <span style=''>      case (\/-(a), \/-(app)) ⇒ </span><span style='background: #AEF1AE'>injectR(app(a))</span><span style=''>
+</span>23 <span style=''>      case (-\/(a), -\/(b))   ⇒ </span><span style='background: #AEF1AE'>injectL(implicitly[Semigroup[E]].append(a, b))</span><span style=''>
+</span>24 <span style=''>      case (-\/(a), _)        ⇒ </span><span style='background: #AEF1AE'>injectL(a)</span><span style=''>
+</span>25 <span style=''>      case (_, -\/(b))        ⇒ </span><span style='background: #AEF1AE'>injectL(b)</span><span style=''>
+</span>26 <span style=''>    }
+</span>27 <span style=''>
+</span>28 <span style=''>    override def bind[A, B](fa: E ∪ A)(f: A ⇒ E ∪ B): E ∪ B = fa match {
+</span>29 <span style=''>      case \/-(a) ⇒ </span><span style='background: #AEF1AE'>f(a)</span><span style=''>
+</span>30 <span style=''>      case -\/(b) ⇒ </span><span style='background: #AEF1AE'>-\/(b)</span><span style=''>
+</span>31 <span style=''>    }
+</span>32 <span style=''>  }
+</span>33 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          399
+        </td>
+        <td>
+          493
+          -
+          499
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          390
+        </td>
+        <td>
+          541
+          -
+          547
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          376
+        </td>
+        <td>
+          605
+          -
+          608
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          375
+        </td>
+        <td>
+          667
+          -
+          677
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          397
+        </td>
+        <td>
+          793
+          -
+          808
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          22
+        </td>
+        <td>
+          381
+        </td>
+        <td>
+          801
+          -
+          807
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          404
+        </td>
+        <td>
+          841
+          -
+          887
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          23
+        </td>
+        <td>
+          371
+        </td>
+        <td>
+          849
+          -
+          886
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          24
+        </td>
+        <td>
+          401
+        </td>
+        <td>
+          920
+          -
+          930
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          25
+        </td>
+        <td>
+          388
+        </td>
+        <td>
+          963
+          -
+          973
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          29
+        </td>
+        <td>
+          392
+        </td>
+        <td>
+          1074
+          -
+          1078
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr><tr>
+        <td>
+          30
+        </td>
+        <td>
+          410
+        </td>
+        <td>
+          1099
+          -
+          1105
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td style="background: #AEF1AE">
+          
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>
