@@ -1,8 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0m/home/omadas/dev/projects/scala/http4s-fun/modules/users/src/main/scala/com/omd/service/users/Users.scala:38:94: value to is not a member of com.omd.service.domain.Cors[0m
-[0m[[0m[31merror[0m] [0m[0m    Kleisli { cors ⇒ userService[IO].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig])) }[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                                             ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/omadas/dev/projects/scala/http4s-fun/modules/users/src/main/scala/com/omd/service/users/Users.scala:38:15: parameter value cors in value $anonfun is never used[0m
-[0m[[0m[33mwarn[0m] [0m[0m    Kleisli { cors ⇒ userService[IO].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig])) }[0m
-[0m[[0m[33mwarn[0m] [0m[0m              ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m

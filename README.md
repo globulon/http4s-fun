@@ -1,4 +1,4 @@
-### HTTP4S Fin
+### HTTP4S Fun
 
 #### Modules
 
@@ -32,10 +32,21 @@ run
 sbt:users> run
 ```
 
-connect using 
+### Route to service 
+```bash
+curl -verbose  "http://localhost:8080/index" -H "Accept:application/json"
+```
 
 ```bash
-$ curl -verbose  "http://localhost:8080/index" -H "Accept:application/json" -H "Origin:http://api.alpha.com"
+curl -verbose "http://localhost:8080/users" -H "Accept:application/json" 
+```
+
+```bash
+curl -verbose -X POST "http://localhost:8080/user" -H "Accept:application/json" -H "Content-Type:application/json" -d '{ "name" : "Andrea" }' 
+```
+
+```bash
+curl -verbose "http://localhost:8080/user/1" -H "Accept:application/json"
 ```
 
 #### Code coverage
