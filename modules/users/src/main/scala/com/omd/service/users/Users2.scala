@@ -1,19 +1,26 @@
 package com.omd.service.users
 
-import cats.{Monad, Parallel}
-import cats.data.ReaderT
+import cats.Parallel
+import cats.data.{Kleisli, ReaderT}
 import cats.instances.string.catsStdShowForString
 import com.olegpy.meow.hierarchy._
+import com.omd.fp._
 import com.omd.service.domain.{Cors, Server}
 import com.omd.service.errors._
 import com.omd.service.interpreters._
 import com.typesafe.config.ConfigFactory.parseResources
 import org.http4s._
+import org.http4s.implicits._
+import org.http4s.server.blaze.BlazeServerBuilder
+import com.omd.service.users.interpreters._
+import com.omd.service.users.http._
+import com.omd.service.http._
+import org.http4s.server.middleware.{CORS, CORSConfig}
 import scalaz.zio._
-import scalaz.zio.interop.catz.taskConcurrentInstances
+import scalaz.zio.interop.catz.{taskConcurrentInstances, zioContextShift, CatsApp, taskEffectInstances}
 //import scalaz.zio.interop._
 
-object Users2 extends App {
+object Users2 extends CatsApp {
   implicit private val P: Parallel[Task, Task] = Parallel.identity[Task]
 
   private def loadConfig: Task[Server] = for {
@@ -33,11 +40,11 @@ object Users2 extends App {
   private def start: ReaderT[Task, Server, Int] = ???
 //    createService.local[Server](_.cors).tapWithF { case (server, entities) ⇒ startServer(entities)(server) }
 
-  private def createService: ReaderT[Task, Cors, Http[Task, Task]] = ???
-//    Kleisli { cors ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig])) }
+  private def createService: Cors ⇒ Task[Http[Task, Task]] =
+    cors ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig]))
 
   private def startServer(entities: Http[Task, Task]): ReaderT[Task, Server, Int] = ???
-
+//
 //    Kleisli {
 //    case Server(Bindings(host, port), _) ⇒
 //      BlazeServerBuilder[Task]
