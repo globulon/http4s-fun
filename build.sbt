@@ -116,6 +116,8 @@ lazy val catsSettings = Seq(
     "org.typelevel" %% "cats-effect-laws" % "1.1.0" % Test,
     "org.typelevel" %% "cats-mtl-laws" % "0.4.0" % Test,
     "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.6" % Test,
+    "org.scalaz" %% "scalaz-zio" % "1.0-RC4",
+    "org.scalaz" %% "scalaz-zio-interop-cats" % "1.0-RC4"
    ) map {
     _ withSources() withJavadoc()
   }
