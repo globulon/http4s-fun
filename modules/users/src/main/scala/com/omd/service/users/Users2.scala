@@ -1,24 +1,24 @@
 package com.omd.service.users
 
+import cats.Functor.ops._
 import cats.Parallel
-import cats.data.{Kleisli, ReaderT}
+import cats.data.ReaderT
 import cats.instances.string.catsStdShowForString
 import com.olegpy.meow.hierarchy._
 import com.omd.fp._
-import com.omd.service.domain.{Cors, Server}
+import com.omd.service.domain.{Bindings, Cors, Server}
 import com.omd.service.errors._
 import com.omd.service.interpreters._
+import com.omd.service.users.http._
+import com.omd.service.users.interpreters._
 import com.typesafe.config.ConfigFactory.parseResources
 import org.http4s._
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
-import com.omd.service.users.interpreters._
-import com.omd.service.users.http._
-import com.omd.service.http._
 import org.http4s.server.middleware.{CORS, CORSConfig}
 import scalaz.zio._
-import scalaz.zio.interop.catz.{taskConcurrentInstances, zioContextShift, CatsApp, taskEffectInstances}
-//import scalaz.zio.interop._
+import scalaz.zio.interop.catz.implicits.ioTimer
+import scalaz.zio.interop.catz.{CatsApp, taskEffectInstances}
 
 object Users2 extends CatsApp {
   implicit private val P: Parallel[Task, Task] = Parallel.identity[Task]
@@ -43,19 +43,15 @@ object Users2 extends CatsApp {
   private def createService: Cors ⇒ Task[Http[Task, Task]] =
     cors ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig]))
 
-  private def startServer(entities: Http[Task, Task]): ReaderT[Task, Server, Int] = ???
-//
-//    Kleisli {
-//    case Server(Bindings(host, port), _) ⇒
-//      BlazeServerBuilder[Task]
-//        .bindHttp(port = port, host = host)
-//        .withHttpApp(entities)
-//        .withBanner(banner)
-//        .serve
-//        .compile
-//        .drain
-//        .as(ExitCode.Success)
-//  }
-
-//  def run(args: List[String]): ZIO[Environment, Nothing, Int]
+  private def startServer: Http[Task, Task] ⇒ Server ⇒ Task[Int] = entities ⇒ {
+    case Server(Bindings(h, p), _) ⇒
+      BlazeServerBuilder[Task]
+        .bindHttp(port = p, host = h)
+        .withHttpApp(entities)
+        .withBanner(banner)
+        .serve
+        .compile
+        .drain
+        .as(0)
+  }
 }
