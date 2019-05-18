@@ -2,11 +2,10 @@ package com.omd.service.users
 
 import cats.Functor.ops._
 import cats.Parallel
-import cats.data.ReaderT
 import cats.instances.string.catsStdShowForString
 import com.olegpy.meow.hierarchy._
 import com.omd.fp._
-import com.omd.service.domain.{Bindings, Cors, Server}
+import com.omd.service.domain.{Bindings, Server}
 import com.omd.service.errors._
 import com.omd.service.interpreters._
 import com.omd.service.users.http._
@@ -31,19 +30,17 @@ object Users2 extends CatsApp {
   override def run(args: List[String]): UIO[Int] = boot.catchAll(_ ⇒ UIO.succeed(7))
 
     private def boot: Task[Int] = for {
-    server ← loadConfig
-    logger ← logger[Task](name = "User-Service")
-    _      ← logger.info(s"""Starting server $server""")
-    exit   ← start(server)
+    server    ← loadConfig
+    logger    ← logger[Task](name = "User-Service")
+    _         ← logger.info(s"""Starting server $server""")
+    entities  ← createService(server)
+    exit      ← start(entities)(server)
   } yield exit
 
-  private def start: ReaderT[Task, Server, Int] = ???
-//    createService.local[Server](_.cors).tapWithF { case (server, entities) ⇒ startServer(entities)(server) }
+ private def createService: Server ⇒ Task[Http[Task, Task]] =
+    srv ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, srv.cors.to[CORSConfig]))
 
-  private def createService: Cors ⇒ Task[Http[Task, Task]] =
-    cors ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig]))
-
-  private def startServer: Http[Task, Task] ⇒ Server ⇒ Task[Int] = entities ⇒ {
+  private def start: Http[Task, Task] ⇒ Server ⇒ Task[Int] = entities ⇒ {
     case Server(Bindings(h, p), _) ⇒
       BlazeServerBuilder[Task]
         .bindHttp(port = p, host = h)

@@ -1,7 +1,7 @@
 ### HTTP4S Fun
 
-Playing around with Http4s and try to attach an Error handling mechanism
-base on the introduction a type error channel
+Playing around with Http4s and trying to attach an Error handling mechanism
+based on the introduction a type error channel
 
 ```scala
 trait ErrorChannel[F[_], E <: Throwable] {
