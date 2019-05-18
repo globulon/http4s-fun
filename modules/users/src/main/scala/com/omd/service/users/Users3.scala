@@ -1,7 +1,6 @@
 package com.omd.service.users
 
 import cats.Functor.ops._
-import cats.Parallel
 import cats.instances.string.catsStdShowForString
 import com.olegpy.meow.hierarchy._
 import com.omd.fp._
@@ -17,18 +16,17 @@ import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.server.middleware.{CORS, CORSConfig}
 import scalaz.zio._
+import scalaz.zio.interop.ParIO
 import scalaz.zio.interop.catz.implicits.ioTimer
-import scalaz.zio.interop.catz.{CatsApp, taskEffectInstances}
+import scalaz.zio.interop.catz.{CatsApp, taskEffectInstances, parallelInstance}
 
 
 object Users3 extends CatsApp {
-  implicit private val P: Parallel[Task, Task] = Parallel.identity[Task]
-
   override def run(args: List[String]): UIO[Int] =  loadConfig >>> boot catchAll(_ ⇒ UIO.succeed(7))
 
   private def loadConfig: Task[Server] = for {
     config ← Task(parseResources("server.conf"))
-    server ← configuration[Task, Task, ConfigError].server(config)
+    server ← configuration[Task, ParIO[Any, Throwable, ?], ConfigError].server(config)
   } yield server
 
   private def boot: TaskR[Server, Int] = for {
