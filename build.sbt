@@ -1,3 +1,5 @@
+import com.typesafe.sbt.packager.docker.ExecCmd
+
 import scala.language.postfixOps
 
 name := "http4s-fun"
@@ -138,6 +140,20 @@ lazy val http4sSettings = Seq(
   }
 )
 
+lazy val dockerSettings = Seq(
+  dockerBaseImage := "registry.gitlab.com/graboids/alpha-project/jdk11:latest",
+  version in Docker := "latest",
+  maintainer in Docker := "marc-Daniel Ortega <globulon@gmail.com>",
+  dockerRepository := Some("registry.gitlab.com"),
+  // setting the run script executable
+  dockerCommands ++= Seq(
+    ExecCmd("RUN",
+      "chmod", "u+x",
+      s"${(defaultLinuxInstallLocation in Docker).value}/bin/users"),
+  ),
+  dockerCmd ++= Seq(s"${(defaultLinuxInstallLocation in Docker).value}/bin/users")
+)
+
 lazy val fp = (project in file("modules/fp"))
   .settings(commonSettings ++ catsSettings ++ coverageSettings)
 
@@ -147,7 +163,7 @@ lazy val core = (project in file("modules/core-service"))
 
 lazy val users = (project in file("modules/users"))
   .settings(commonSettings ++ catsSettings ++ appSettings ++ http4sSettings ++ loggerSettings ++ 
-    coverageSettings )
+    dockerSettings ++ coverageSettings ++ (packageName in Docker := "graboids/alpha-project/users-zio"))
   .dependsOn(core, fp)
   .enablePlugins(JavaAppPackaging)
   .enablePlugins(DockerPlugin)

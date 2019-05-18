@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  users-zio:
+    image: registry.gitlab.com/graboids/alpha-project/users-zio:latest
+    expose:
+      - 8080
+    ports:
+      - 8080:8080

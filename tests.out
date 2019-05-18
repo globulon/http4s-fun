@@ -1,0 +1,36 @@
+Cats IO
+** SIEGE 4.0.4
+** Preparing 100 concurrent users for battle.
+The server is now under siege...
+Transactions:		        2500 hits
+Availability:		      100.00 %
+Elapsed time:		       19.09 secs
+Data transferred:	        0.24 MB
+Response time:		        0.00 secs
+Transaction rate:	      130.96 trans/sec
+Throughput:		        0.01 MB/sec
+Concurrency:		        0.38
+Successful transactions:        2500
+Failed transactions:	           0
+Longest transaction:	        0.05
+Shortest transaction:	        0.00
+
+ZIO
+
+** SIEGE 4.0.4
+** Preparing 100 concurrent users for battle.
+The server is now under siege...
+Transactions:		        2500 hits
+Availability:		      100.00 %
+Elapsed time:		       17.09 secs
+Data transferred:	        0.24 MB
+Response time:		        0.00 secs
+Transaction rate:	      146.28 trans/sec
+Throughput:		        0.01 MB/sec
+Concurrency:		        0.48
+Successful transactions:        2500
+Failed transactions:	           0
+Longest transaction:	        0.06
+Shortest transaction:	        0.00
+
+
