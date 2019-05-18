@@ -30,16 +30,15 @@ object Users3 extends CatsApp {
   } yield server
 
   private def boot: TaskR[Server, Int] = for {
-    _   ← startLogger
+    s   ← TaskR.environment[Server]
+    log ← startLogger
+    _   ← log.info(s"""Starting server $s""")
     srv ← createService
     r   ← start(srv)
   }  yield r
 
-  private def startLogger: TaskR[Server, Logging[Task]] = for {
-    srv    ← TaskR.environment[Server]
-    logger ← logger[Task](name = "User-Service")
-    _      ← logger.info(s"""Starting server $srv""")
-  } yield logger
+  private def startLogger: TaskR[Server, Logging[Task]] =
+    TaskR.environment[Server] >>= { _ ⇒ logger[Task](name = "User-Service") }
 
   private def createService: TaskR[Server, Http[Task, Task]] = TaskR.access[Server](_.cors) >>= {
     cors ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig]))
