@@ -38,21 +38,20 @@ object Users3 extends CatsApp {
   }  yield r
 
   private def startLogger: TaskR[Server, Logging[Task]] =
-    TaskR.environment[Server] >>= { _ ⇒ logger[Task](name = "User-Service") }
+    TaskR.accessM[Server] { _ ⇒ logger[Task](name = "User-Service") }
 
-  private def createService: TaskR[Server, Http[Task, Task]] = TaskR.access[Server](_.cors) >>= {
-    cors ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig]))
+  private def createService: TaskR[Server, Http[Task, Task]] = TaskR.accessM[Server] {
+    case Server(_, cors) ⇒ userService[Task].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig]))
   }
 
-  private def start(entities: Http[Task, Task]): TaskR[Server, Int]  = TaskR.access[Server](_.bindings) >>= {
-    case Bindings(h, p) ⇒
-        BlazeServerBuilder[Task]
-          .bindHttp(port = p, host = h)
-          .withHttpApp(entities)
-          .withBanner(banner)
-          .serve
-          .compile
-          .drain
-          .as(0)
+  private def start(entities: Http[Task, Task]): TaskR[Server, Int]  = TaskR.accessM[Server]  {
+    case Server(Bindings(h, p), _) ⇒
+      BlazeServerBuilder[Task].bindHttp(port = p, host = h)
+        .withHttpApp(entities)
+        .withBanner(banner)
+        .serve
+        .compile
+        .drain
+        .as(0)
   }
 }
