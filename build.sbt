@@ -163,11 +163,11 @@ lazy val dockerSettings = Seq(
 
 lazy val fp = (project in file("modules/fp"))
     .settings(commonSettings ++ catsSettings ++ coverageSettings)
-    .settings(publishArtifact := false)
+//    .settings(publishArtifact := false)
 
 lazy val core = (project in file("modules/core-service"))
   .settings(commonSettings  ++ appSettings ++ catsSettings ++ coverageSettings ++ http4sSettings ++ loggerSettings)
-  .settings(publishArtifact := false)
+//  .settings(publishArtifact := false)
   .dependsOn(fp)
 
 lazy val users = (project in file("modules/users"))
@@ -178,5 +178,5 @@ lazy val users = (project in file("modules/users"))
   .enablePlugins(DockerPlugin)
   .enablePlugins(EcrPlugin)
 
-lazy val root = (project in file(".")).aggregate(core, fp, users).settings(publishArtifact := false)
+lazy val root = (project in file(".")).aggregate(core, fp, users)
   
