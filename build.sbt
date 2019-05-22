@@ -162,11 +162,14 @@ lazy val dockerSettings = Seq(
   push                in Ecr    := ((push in Ecr) dependsOn (publishLocal in Docker, login in Ecr)).value
 )
 
-lazy val fp = (project in file("modules/fp")).settings(commonSettings ++ catsSettings ++ coverageSettings)
-
+lazy val fp = (project in file("modules/fp"))
+    .settings(commonSettings ++ catsSettings ++ coverageSettings)
+    .settings(publishArtifact := false)
 
 lazy val core = (project in file("modules/core-service"))
-  .settings(commonSettings  ++ appSettings ++ catsSettings ++ coverageSettings ++ http4sSettings ++ loggerSettings).dependsOn(fp)
+  .settings(commonSettings  ++ appSettings ++ catsSettings ++ coverageSettings ++ http4sSettings ++ loggerSettings)
+  .settings(publishArtifact := false)
+  .dependsOn(fp)
 
 lazy val users = (project in file("modules/users"))
   .settings(commonSettings ++ catsSettings ++ appSettings ++ http4sSettings ++ loggerSettings ++ 
@@ -176,4 +179,5 @@ lazy val users = (project in file("modules/users"))
   .enablePlugins(DockerPlugin)
   .enablePlugins(EcrPlugin)
 
-lazy val root = (project in file(".")).aggregate(core, fp, users)
+lazy val root = (project in file(".")).aggregate(core, fp, users).settings(publishArtifact := false)
+  
