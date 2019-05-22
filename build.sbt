@@ -6,7 +6,6 @@ import com.typesafe.sbt.packager.docker.ExecCmd
 import scala.language.postfixOps
 
 name := "http4s-fun"
-version := "0.0.1-SNAPSHOT"
 
 val versions = new {
   val http4s = "0.20.0-SNAPSHOT"
