@@ -150,7 +150,6 @@ lazy val dockerSettings = Seq(
   maintainer          in Docker := "marc-Daniel Ortega <globulon@gmail.com>",
   dockerBaseImage     in Docker := "registry.gitlab.com/graboids/alpha-project/jdk11:latest",
   packageName         in Docker := "graboids/alpha-project/users-zio",
-  version             in Docker := "latest",
   dockerExposedPorts  in Docker := Seq(8080),
   dockerRepository    in Docker := Some("registry.gitlab.com"),
   dockerCommands      in Docker ++= Seq(ExecCmd("RUN", "chmod", "u+x", s"${(defaultLinuxInstallLocation in Docker).value}/bin/users")),
