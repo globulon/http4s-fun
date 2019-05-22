@@ -1,9 +1,8 @@
-addSbtPlugin(dependency = "com.typesafe.sbt" % "sbt-native-packager" % "1.3.12")
-
-addSbtPlugin(dependency = "com.eed3si9n" % "sbt-assembly" % "0.14.8")
-
-addSbtPlugin(dependency = "org.scoverage" % "sbt-scoverage" % "1.5.1")
-
-addSbtPlugin(dependency = "com.geirsson" % "sbt-scalafmt" % "1.5.1")
-
-addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.1.0-M13-4")
+addSbtPlugin(dependency = "com.typesafe.sbt"  % "sbt-native-packager"       % "1.3.20")
+addSbtPlugin(dependency = "com.eed3si9n"      % "sbt-assembly"              % "0.14.9")
+addSbtPlugin(dependency = "org.scoverage"     % "sbt-scoverage"             % "1.5.1")
+addSbtPlugin(dependency = "com.geirsson"      % "sbt-scalafmt"              % "1.5.1")
+addSbtPlugin(dependency = "io.get-coursier"   % "sbt-coursier"              % "1.1.0-M13-4")
+addSbtPlugin(dependency = "com.dwijnand"      % "sbt-dynver"                % "3.3.0")
+addSbtPlugin(dependency = "net.virtual-void"  % "sbt-dependency-graph"      % "0.9.2")
+addSbtPlugin(dependency = "com.mintbeans"     % "sbt-ecr"                   % "0.14.1")

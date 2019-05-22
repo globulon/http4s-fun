@@ -1,9 +1,17 @@
+import com.amazonaws.regions.Region
+import com.amazonaws.regions.Regions.US_EAST_1
+
 import com.typesafe.sbt.packager.docker.ExecCmd
 
 import scala.language.postfixOps
 
 name := "http4s-fun"
 version := "0.0.1-SNAPSHOT"
+
+val versions = new {
+  val http4s = "0.20.0-SNAPSHOT"
+  val circe  = "0.11.1"
+}
 
 lazy val commonSettings = Seq(
   organization := "com.omd",
@@ -76,7 +84,8 @@ lazy val commonSettings = Seq(
     Resolver.typesafeRepo("releases"),
     Resolver.sonatypeRepo("releases"),
     // Only necessary for SNAPSHOT release
-    Resolver.sonatypeRepo("snapshots"))
+    Resolver.sonatypeRepo("snapshots"),
+    Resolver.bintrayIvyRepo("sullis", "sbt-plugins"))
 )
 
 lazy val appSettings = Seq(
@@ -98,8 +107,6 @@ lazy val loggerSettings = Seq(
   }
 )
 
-val http4sVersion = "0.20.0-SNAPSHOT"
-val CirceVersion = "0.10.0"
 
 lazy val catsSettings = Seq(
   libraryDependencies ++= Seq(
@@ -117,9 +124,9 @@ lazy val catsSettings = Seq(
     "org.typelevel" %% "cats-laws" % "1.1.0" % Test, //or `cats-testkit` if you are using ScalaTest
     "org.typelevel" %% "cats-effect-laws" % "1.1.0" % Test,
     "org.typelevel" %% "cats-mtl-laws" % "0.4.0" % Test,
-    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.6" % Test,
     "org.scalaz" %% "scalaz-zio" % "1.0-RC4",
-    "org.scalaz" %% "scalaz-zio-interop-cats" % "1.0-RC4"
+    "org.scalaz" %% "scalaz-zio-interop-cats" % "1.0-RC4",
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % "1.1.6" % Test
    ) map {
     _ withSources() withJavadoc()
   }
@@ -127,35 +134,36 @@ lazy val catsSettings = Seq(
 
 lazy val http4sSettings = Seq(
   libraryDependencies ++= Seq(
-    "org.http4s" %% "http4s-blaze-server" % http4sVersion,
-    "org.http4s" %% "http4s-blaze-client" % http4sVersion,
-    "org.http4s" %% "http4s-circe" % http4sVersion,
+    "org.http4s" %% "http4s-blaze-server" % versions.http4s,
+    "org.http4s" %% "http4s-blaze-client" % versions.http4s,
+    "org.http4s" %% "http4s-circe"        % versions.http4s,
     // Optional for auto-derivation of JSON codecs
-    "io.circe" %% "circe-generic" % "0.11.1",
+    "io.circe"   %% "circe-generic"       % versions.circe ,
     // Optional for string interpolation to JSON model
-    "io.circe" %% "circe-literal" % "0.11.1",
-    "org.http4s" %% "http4s-dsl" % http4sVersion
+    "io.circe"   %% "circe-literal"       % versions.circe ,
+    "org.http4s" %% "http4s-dsl"          % versions.http4s
   )  map {
     _ withSources() withJavadoc()
   }
 )
 
 lazy val dockerSettings = Seq(
-  dockerBaseImage := "registry.gitlab.com/graboids/alpha-project/jdk11:latest",
-  version in Docker := "latest",
-  maintainer in Docker := "marc-Daniel Ortega <globulon@gmail.com>",
-  dockerRepository := Some("registry.gitlab.com"),
-  // setting the run script executable
-  dockerCommands ++= Seq(
-    ExecCmd("RUN",
-      "chmod", "u+x",
-      s"${(defaultLinuxInstallLocation in Docker).value}/bin/users"),
-  ),
-  dockerCmd ++= Seq(s"${(defaultLinuxInstallLocation in Docker).value}/bin/users")
+  maintainer          in Docker := "marc-Daniel Ortega <globulon@gmail.com>",
+  dockerBaseImage     in Docker := "registry.gitlab.com/graboids/alpha-project/jdk11:latest",
+  packageName         in Docker := "graboids/alpha-project/users-zio",
+  version             in Docker := "latest",
+  dockerExposedPorts  in Docker := Seq(8080),
+  dockerRepository    in Docker := Some("registry.gitlab.com"),
+  dockerCommands      in Docker ++= Seq(ExecCmd("RUN", "chmod", "u+x", s"${(defaultLinuxInstallLocation in Docker).value}/bin/users")),
+  dockerCmd           in Docker ++= Seq(s"${(defaultLinuxInstallLocation in Docker).value}/bin/users"),
+  region              in Ecr    := Region.getRegion(US_EAST_1),
+  repositoryName      in Ecr    := "omd-zio-toys",
+  localDockerImage    in Ecr    := (packageName in Docker).value + ":" + (version in Docker).value,
+  repositoryTags      in Ecr    := Seq((version in Docker).value, "latest"),
+  push                in Ecr    := ((push in Ecr) dependsOn (publishLocal in Docker, login in Ecr)).value
 )
 
-lazy val fp = (project in file("modules/fp"))
-  .settings(commonSettings ++ catsSettings ++ coverageSettings)
+lazy val fp = (project in file("modules/fp")).settings(commonSettings ++ catsSettings ++ coverageSettings)
 
 
 lazy val core = (project in file("modules/core-service"))
@@ -163,9 +171,10 @@ lazy val core = (project in file("modules/core-service"))
 
 lazy val users = (project in file("modules/users"))
   .settings(commonSettings ++ catsSettings ++ appSettings ++ http4sSettings ++ loggerSettings ++ 
-    dockerSettings ++ coverageSettings ++ (packageName in Docker := "graboids/alpha-project/users-zio"))
+    dockerSettings ++ coverageSettings)
   .dependsOn(core, fp)
   .enablePlugins(JavaAppPackaging)
   .enablePlugins(DockerPlugin)
+  .enablePlugins(EcrPlugin)
 
 lazy val root = (project in file(".")).aggregate(core, fp, users)
