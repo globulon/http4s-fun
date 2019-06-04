@@ -16,6 +16,7 @@ private[http] trait ErrorHandlers {
         case e @ UserAlreadyExists(_) ⇒ Conflict(Message(http.Error, Show[UserAlreadyExists].show(e)))
         case e @ MissingUser(_)       ⇒ NotFound(Message(http.Error, Show[MissingUser].show(e)))
       }
-      override def handle(routes: HttpRoutes[F]): HttpRoutes[F] = h(routes)
+
+      override def handle: HttpRoutes[F] ⇒ HttpRoutes[F] = h
     }
 }

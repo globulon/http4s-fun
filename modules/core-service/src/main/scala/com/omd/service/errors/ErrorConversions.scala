@@ -8,7 +8,7 @@ import org.http4s.{HttpRoutes, Response}
 import scala.reflect.ClassTag
 import scala.util.Try
 
-private[errors] trait Errors {
+private[errors] trait ErrorConversions {
   implicit final def genConfigError: ErrGenerator[Throwable, ConfigError] = new ErrGenerator[Throwable, ConfigError] {
     override def apply: Throwable ⇒ ConfigError = t ⇒ ConfigError(t.getMessage)
   }
@@ -42,7 +42,7 @@ private[errors] trait Errors {
     def raise[A]: F[A] = ErrorChannel[F, E].raise[A](e)
   }
 
-  def makeHandle[F[_], E <: Throwable](handler: E ⇒ F[Response[F]])(implicit EH: ApplicativeError[F, E]): Endo[HttpRoutes[F]] =
+  final def makeHandle[F[_], E <: Throwable](handler: E ⇒ F[Response[F]])(implicit EH: ApplicativeError[F, E]): Endo[HttpRoutes[F]] =
     routes ⇒
       Kleisli { req ⇒
         OptionT { routes.run(req).value.handleErrorWith(e ⇒ handler(e).map(Option(_))) }
