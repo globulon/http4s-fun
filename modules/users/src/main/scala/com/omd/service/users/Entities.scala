@@ -4,20 +4,20 @@ import cats.effect._
 import cats.implicits._
 import com.omd.service.errors.ErrorHandler
 import com.omd.service.http._
-import com.omd.service.users.algebras.Users
-import com.omd.service.users.domain.UserDefinition
+import com.omd.service.users.algebras.{Subscriptions, Users}
+import com.omd.service.users.domain.{User, UserDefinition}
 import com.omd.service.users.errors.UserError
 import com.omd.service.users.http._
 import io.circe.syntax._
 import org.http4s.HttpRoutes
 import org.http4s.dsl._
 
-final private[users] class Entities[F[_]](users: Users[F],
-                                         )(implicit S: Effect[F], EH: ErrorHandler[F, UserError])
+final private[users] class Entities[F[_]](users: Users[F], subs: Subscriptions[F],
+                                         )(implicit S: Effect[F], EH: ErrorHandler[F, UserError ])
   extends Http4sDsl[F] {
   private def service: HttpRoutes[F] = HttpRoutes.of[F] {
     case GET → (Root / "user" / LongVar(byId)) ⇒
-      S.flatMap(users.findById(byId)) { user ⇒ Ok(user.asJson) }
+      S.flatMap { someParallelLogic(byId)} { user ⇒ Ok(user.asJson) }
 
     case GET → (Root / "users") ⇒
       S.flatMap(users.findAll) { users ⇒ Ok(users.asJson) }
@@ -28,6 +28,10 @@ final private[users] class Entities[F[_]](users: Users[F],
     case GET → (Root / "index") ⇒
       Ok(Message(Info, "Welcome to user service").asJson)
   }
+
+  private def someParallelLogic(byId: Long): F[User] =
+    (subs.findById(7), users.findById(byId)).mapN { case (_, u) ⇒ u }
+
 
   def routes: HttpRoutes[F] = EH.handle(service)
 }

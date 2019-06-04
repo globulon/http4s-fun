@@ -42,7 +42,8 @@ private[errors] trait ErrorConversions {
     def raise[A]: F[A] = ErrorChannel[F, E].raise[A](e)
   }
 
-  final def makeHandle[F[_], E <: Throwable](handler: E ⇒ F[Response[F]])(implicit EH: ApplicativeError[F, E]): Endo[HttpRoutes[F]] =
+  final def makeHandle[F[_], E <: Throwable](handler: E ⇒ F[Response[F]])
+                                            (implicit EH: ApplicativeError[F, E]): Endo[HttpRoutes[F]] =
     routes ⇒
       Kleisli { req ⇒
         OptionT { routes.run(req).value.handleErrorWith(e ⇒ handler(e).map(Option(_))) }

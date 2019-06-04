@@ -1,8 +1,6 @@
 package com.omd.service.users.http
 
 import com.omd.service.users.domain.{User, UserDefinition}
-import com.omd.service.users.domain.{User, UserDefinition}
-import com.omd.service.users.domain.{User, UserDefinition}
 import io.circe._
 import io.circe.literal._
 

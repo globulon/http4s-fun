@@ -2,7 +2,7 @@ package com.omd.service.errors
 
 import scala.util.Try
 
-trait ErrorChannel[F[_], E <: Throwable] {
+trait ErrorChannel[F[_], E] {
   def raise[A](e: E): F[A]
 
   def fold[A](a: Try[A])(implicit EG: ErrGenerator[Throwable, E]): F[A]
