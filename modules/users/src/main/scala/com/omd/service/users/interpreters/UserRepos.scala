@@ -1,32 +1,29 @@
 package com.omd.service.users.interpreters
 
-import cats.effect.Sync
+import cats.effect._
 import cats.effect.concurrent.Ref
 import cats.implicits._
 import com.omd.service.errors.ErrorChannel
 import com.omd.service.users.algebras.Users
 import com.omd.service.users.domain.{User, UserDefinition}
-import com.omd.service.users.errors.{UserAlreadyExists, UserError}
-import com.omd.service.users.algebras.Users
-import com.omd.service.users.domain.{User, UserDefinition}
-import com.omd.service.users.errors.{UserAlreadyExists, UserError}
-import com.omd.service.users.algebras.Users
-import com.omd.service.users.domain.{User, UserDefinition}
-import com.omd.service.users.errors.{UserAlreadyExists, UserError}
+import com.omd.service.users.errors.{MissingUser, UserAlreadyExists, UserError}
 
 private[interpreters] trait UserRepos {
-  final def users[M[_]: Sync](implicit EC: ErrorChannel[M, UserError]): M[Users[M]] =
-    Ref.of[M, Map[Long, User]](Map.empty).map { users ⇒
-      new Users[M] {
-        override def findById: Long ⇒ M[Option[User]] = byId ⇒ users.get.map(_.get(byId))
+  final def users[F[_]: Sync](implicit EC: ErrorChannel[F, UserError]): F[Users[F]] =
+    Ref.of[F, Map[Long, User]](Map.empty).map { users ⇒
+      new Users[F] {
+        override def findById: Long ⇒ F[User] = id ⇒ users.get.map(_.get(id)) flatMap {
+          case Some(u) ⇒ Sync[F].pure(u)
+          case None    ⇒ EC.raise(MissingUser(id))
+        }
 
-        override def findBy: UserDefinition ⇒ M[Option[User]] = {
+        private def findBy: UserDefinition ⇒ F[Option[User]] = {
           case UserDefinition(name) ⇒ users.get.map(_.values.find(_.name === name))
         }
 
-        override def findAll: M[List[User]] = users.get.map(_.values.toList)
+        override def findAll: F[List[User]] = users.get.map(_.values.toList)
 
-        override def create: UserDefinition ⇒ M[Unit] = { case d @ UserDefinition(_) ⇒
+        override def create: UserDefinition ⇒ F[Unit] = { case d @ UserDefinition(_) ⇒
           findBy(d).flatMap {
             case Some(User(_, name)) ⇒ EC.raise(UserAlreadyExists(name))
             case None                ⇒ users.update(makeUser(d))
