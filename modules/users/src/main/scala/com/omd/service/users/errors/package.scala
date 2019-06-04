@@ -1,3 +1,3 @@
 package com.omd.service.users
 
-package object errors extends Errors
+package object errors extends ErrorFormatting

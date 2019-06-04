@@ -36,7 +36,7 @@ object Users extends IOApp {
     createService.local[Server](_.cors).tapWithF { case (server, entities) ⇒ startServer(entities)(server) }
 
   private def createService: ReaderT[IO, Cors, Http[IO, IO]] =
-    Kleisli { cors ⇒ userService[IO].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig])) }
+    Kleisli { cors ⇒ users[IO].map(new Entities(_).routes.orNotFound).map(CORS(_, cors.to[CORSConfig])) }
 
   private def startServer(entities: Http[IO, IO]): ReaderT[IO, Server, ExitCode] = Kleisli {
     case Server(Bindings(host, port), _) ⇒

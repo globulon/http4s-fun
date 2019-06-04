@@ -41,7 +41,7 @@ final class EntitiesTest extends WordSpecLike with MustMatchers with EitherMatch
   "Post user" should {
     "return created" in {
       (for {
-        srv     ← userService[IO]
+        srv     ← users[IO]
         _       ← routes(srv).run(postUser)
         found   ← routes(srv).run(getUser(1L))
         user    ← found.as[User]
@@ -50,7 +50,7 @@ final class EntitiesTest extends WordSpecLike with MustMatchers with EitherMatch
 
     "return conflict" in {
       (for {
-        srv     ← userService[IO]
+        srv     ← users[IO]
         _       ← routes(srv).run(postUser)
         status  ← routes(srv).run(postUser).map(_.status)
       } yield status).to[Safe].effect.value must beRight(Status.Conflict)
@@ -58,7 +58,7 @@ final class EntitiesTest extends WordSpecLike with MustMatchers with EitherMatch
 
     "return conflict message" in {
       (for {
-        srv  ← userService[IO]
+        srv  ← users[IO]
         _    ← routes(srv).run(postUser)
         conf ← routes(srv).run(postUser)
         msg  ← conf.as[Msg]
@@ -67,7 +67,7 @@ final class EntitiesTest extends WordSpecLike with MustMatchers with EitherMatch
 
     "return all messages" in {
       (for {
-        srv   ← userService[IO]
+        srv   ← users[IO]
         _     ← routes(srv).run(postUser(name = "a"))
         _     ← routes(srv).run(postUser(name = "b"))
         _     ← routes(srv).run(postUser(name = "c"))

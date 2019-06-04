@@ -107,6 +107,7 @@ lazy val catsSettings = Seq(
     "co.fs2" %% "fs2-io" % "1.0.2",
     "org.typelevel" %% "cats-mtl-core" % "0.4.0",
     "com.olegpy" %% "meow-mtl" % "0.2.0",
+    "com.chuusai" %% "shapeless" % "2.3.3",
     "com.ironcorelabs" %% "cats-scalatest" % "2.4.0" % Test,
     "com.typesafe" % "config" % "1.3.2",
     "org.scalactic" %% "scalactic" % "3.0.5" % Test,

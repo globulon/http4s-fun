@@ -14,8 +14,8 @@ import com.omd.service.users.algebras.Users
 import com.omd.service.users.domain.{User, UserDefinition}
 import com.omd.service.users.errors.{UserAlreadyExists, UserError}
 
-private[interpreters] trait UserInterpreters {
-  final def userService[M[_]: Sync](implicit EC: ErrorChannel[M, UserError]): M[Users[M]] =
+private[interpreters] trait UserRepos {
+  final def users[M[_]: Sync](implicit EC: ErrorChannel[M, UserError]): M[Users[M]] =
     Ref.of[M, Map[Long, User]](Map.empty).map { users ⇒
       new Users[M] {
         override def findById: Long ⇒ M[Option[User]] = byId ⇒ users.get.map(_.get(byId))
