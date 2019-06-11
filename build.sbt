@@ -66,8 +66,8 @@ lazy val commonSettings = Seq(
 
   fork in Test := true,
 
-  addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.9"),
-  addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.2.4"),
+  addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.10"),
+  addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.0"),
 
 
   resolvers ++= Seq(
@@ -96,21 +96,24 @@ lazy val loggerSettings = Seq(
   }
 )
 
-val http4sVersion = "0.20.0-SNAPSHOT"
+val http4sVersion = "0.20.1"
 val CirceVersion = "0.10.0"
+val catsVersion =  "1.6.1"
+val catsEffectVer = "1.3.1"
+val fs2Ver = "1.0.5"
 
 lazy val catsSettings = Seq(
   libraryDependencies ++= Seq(
-    "org.typelevel" %% "cats-core" % "1.5.0",
-    "org.typelevel" %% "cats-effect" % "1.1.0",
-    "co.fs2" %% "fs2-core" % "1.0.1", // For cats 1.5.0 and cats-effect 1.1.0
-    "co.fs2" %% "fs2-io" % "1.0.2",
+    "org.typelevel" %% "cats-core" % catsVersion,
+    "org.typelevel" %% "cats-effect" % catsEffectVer,
+    "co.fs2" %% "fs2-core" % fs2Ver, // For cats 1.5.0 and cats-effect 1.1.0
+    "co.fs2" %% "fs2-io" % fs2Ver,
     "org.typelevel" %% "cats-mtl-core" % "0.4.0",
     "com.olegpy" %% "meow-mtl" % "0.2.0",
     "com.ironcorelabs" %% "cats-scalatest" % "2.4.0" % Test,
     "com.typesafe" % "config" % "1.3.2",
     "org.scalactic" %% "scalactic" % "3.0.5" % Test,
-    "org.typelevel" %% "cats-testkit" % "1.5.0" % Test,
+    "org.typelevel" %% "cats-testkit" % catsVersion % Test,
     "org.scalatest" %% "scalatest" % "3.0.5" % Test,
     "org.typelevel" %% "cats-laws" % "1.1.0" % Test, //or `cats-testkit` if you are using ScalaTest
     "org.typelevel" %% "cats-effect-laws" % "1.1.0" % Test,
